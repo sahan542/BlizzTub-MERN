@@ -3,6 +3,8 @@ import loginIcons from '../assest/signin.gif'
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
+import imageTobase64 from '../helpers/imageTobase64';
+
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -12,11 +14,11 @@ const SignUp = () => {
       email : "",
       password : "",
       confirmpassword : "",
-      profilephoto : ""
+      profilepic : ""
   })
 
   const handleOnChange = (e) => {
-      const {name, value} = e.target
+      const { name, value } = e.target
       setData((preve) =>{
           return{
               ...preve,
@@ -25,9 +27,16 @@ const SignUp = () => {
       })
   }
 
-  const handleLoadPic = (e) =>{
-      const file = e.target.file[0]
-      console.log("file",file)
+  const handleLoadPic = async(e) =>{
+      const file = e.target.files[0]
+
+      const imagePic = await imageTobase64(file)
+      setData((preve)=>{
+        return{
+            ...preve,
+            profilepic : imagePic
+        }
+      })
   }
   const handleSubmit = (e)=>{
       e.preventDefault()
@@ -39,7 +48,7 @@ const SignUp = () => {
         <div className='bg-white p-2 w-full max-w-md mx-auto border-lg pt-4'>
             <div className='w-20 h-20 mx-auto relative overflow-hidden rounded-full'>
                 <div>
-                    <img src={data.profilephoto || loginIcons} alt='login-icons' />
+                    <img src={data.profilepic || loginIcons} alt='login-icons' />
                 </div>
                 <form>
                   <label>
