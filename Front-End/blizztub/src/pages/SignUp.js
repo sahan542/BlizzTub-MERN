@@ -71,6 +71,7 @@ const SignUp = () => {
                             name='name'
                             value={data.name}
                             onChange={handleOnChange}
+                            required
                             className='w-full h-full outline-none bg-transparent'/>
                     </div>
                 </div>
@@ -83,6 +84,7 @@ const SignUp = () => {
                             name='email'
                             value={data.email}
                             onChange={handleOnChange}
+                            required
                             className='w-full h-full outline-none bg-transparent'/>
                     </div>
                 </div>
@@ -95,6 +97,7 @@ const SignUp = () => {
                             placeholder='enter password here' 
                             onChange={handleOnChange}
                             value={data.password}
+                            required
                             className='w-full h-full outline-none bg-transparent' />    
                         <div className='cursor-pointer text-xl' 
                              onClick={()=>setShowPassword((preve)=>!preve)}>
@@ -123,6 +126,7 @@ const SignUp = () => {
                             placeholder='Re-enter the password here' 
                             onChange={handleOnChange}
                             value={data.confirmpassword}
+                            required
                             className='w-full h-full outline-none bg-transparent' />    
                         <div className='cursor-pointer text-xl' 
                              onClick={()=>setShowConfirmPassword((preve)=>!preve)}>
