@@ -9,10 +9,13 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         setUserDetails : (state,action)=>{
-            console.log(action.payload)
+            state.user = action.payload
+            console.log("userDetails",action.payload)
         }
     },
 })
 
 
-export const { setUserDetails }
+export const { setUserDetails } = userSlice.actions
+
+export default userSlice.reducer

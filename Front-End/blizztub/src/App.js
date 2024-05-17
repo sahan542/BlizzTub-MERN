@@ -3,15 +3,17 @@ import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { ToastContainer } from 'react-toastify';
-
+import { useDispatch } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from 'react';
 import SummaryApi from './common';
 import context from './context';
+import { setUserDetails } from './store/userSlice';
 
 
 
 function App() {
+    const dispatch = useDispatch()
 
     const fetchUserDetails = async() =>{
         const dataResponse = await fetch(SummaryApi.current_user.url, {
@@ -20,7 +22,7 @@ function App() {
         })
         const dataApi = await dataResponse.json()
         if(dataApi.success){
-         //   dispatch(setUser)
+            dispatch(setUserDetails(dataApi.data))
         }
         console.log("data-user",dataResponse)
     }

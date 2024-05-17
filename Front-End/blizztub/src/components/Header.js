@@ -4,12 +4,15 @@ import { IoSearch } from "react-icons/io5";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { TiShoppingCart } from "react-icons/ti";
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 
 
 
 const Header = () => {
+  const user = useSelector(state => state?.user?.user)
+  console.log("user header",user)
   return (
     <header className='h-16 shadow-md bg-white'>
         <div className='h-full container mx-auto flex items-center px-6 justify-between'>
@@ -27,7 +30,14 @@ const Header = () => {
 
           <div className='flex items-center gap-4'>
               <div className='text-3xl cursor-pointer'>
-                  <FaRegCircleUser/>
+                  {
+                    user?.profilepic ? (
+                      <img src={user?.profilepic} alt={user?.name} className='w-10 h-10 rounded-full'/>
+                    ) : (
+                      <FaRegCircleUser/>
+                    )
+                  }
+
               </div>
               <div className='text-3xl relative'>
                 <span><TiShoppingCart/></span>
