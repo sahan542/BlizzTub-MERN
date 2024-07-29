@@ -1,28 +1,30 @@
-const express = require('express')
-const cors = require('cors')
-require('dotenv').config()
-const connectDB = require('./config/db')
-const router = require('./routes/index')
-const cookieParser = require("cookie-parser")
+const express = require('express');
+const cors = require('cors');
+require('dotenv').config();
+const connectDB = require('./config/db');
+const router = require('./routes/index');
+const cookieParser = require('cookie-parser');
 
-const app = express()
+const app = express();
+
+// Middleware to parse cookies
+app.use(cookieParser());
+
 app.use(cors({
-    origin : process.env.FRONTEND_URL,
-    credentials : true
-}))
-app.use(express.json())
-app.use("/api",router)
-app.use(cookieParser())
+    origin: process.env.FRONTEND_URL,
+    credentials: true
+}));
 
-const PORT = 8080 || process.env.PORT
+app.use(express.json());
 
+// Define routes after cookie-parser middleware
+app.use('/api', router);
 
-connectDB().then(()=>{
-    app.listen(PORT,()=>{
-        console.log("connect to database")
-        console.log("Server is running in " +PORT)
-    })
+const PORT = process.env.PORT || 8080;
 
-})
-
-
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log("Connected to database");
+        console.log("Server is running on port " + PORT);
+    });
+});

@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useEffect } from 'react';
 import SummaryApi from './common';
 import context from './context';
-import { setUserDetails } from './store/userSlice';
+import userSlice, { setUserDetails } from './store/userSlice';
 
 
 
@@ -20,6 +20,7 @@ function App() {
             method : SummaryApi.current_user.method,
             credentials : 'include'
         })
+        
         const dataApi = await dataResponse.json()
         if(dataApi.success){
             dispatch(setUserDetails(dataApi.data))
@@ -28,7 +29,7 @@ function App() {
     }
     useEffect(() =>{
         /*user details */
-        fetchUserDetails()
+        fetchUserDetails();
 
     },[])
 
