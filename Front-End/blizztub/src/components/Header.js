@@ -17,20 +17,25 @@ const Header = () => {
   console.log("user header",user)
 
   const handleLogout = async() => {
-    const fetchData = await fetch(SummaryApi.logout_user.url,{
-      method : SummaryApi.logout_user.method,
-      credentials : 'include'
-    })
-    const data = await fetchData.json()
-
-    if(data.success){
-      toast.success(data.message)
+    try{
+      const fetchData = await fetch(SummaryApi.logout_user.url,{
+        method : SummaryApi.logout_user.method,
+        credentials : 'include'
+      })
+      const data = await fetchData.json()
+  
+      if(data.success){
+        toast.success(data.message)
+      }
+      else{
+        toast.error(data.error)
+      }
+  
     }
-
-    if(data.error){
-      toast.error(data.error)
+    catch(error){
+      toast.error("logout failed !")
     }
-
+    
   }
   return (
     <header className='h-16 shadow-md bg-white'>
@@ -51,7 +56,7 @@ const Header = () => {
               <div className='text-3xl cursor-pointer'>
                   {
                     user?.profilepic ? (
-                      <img src={user?.profilepic} alt={user?.name} className='w-10 h-10 rounded-full'/>
+                      <img src={user?.profilepic} alt={user?.name} className='w-10 h-10 rounded-full' title={user?.name} />
                     ) : (
                       <FaRegCircleUser/>
                     )
@@ -66,7 +71,14 @@ const Header = () => {
               </div>
 
                 <div>
-                    <Link to={"/login"} className='px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700'>LogIn</Link>
+                  {
+                    user?._id ?(
+                      <button className='px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700' onClick={handleLogout}>Logout</button>
+                    ): (
+                      <Link to={"/login"} className='px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700'>LogIn</Link>
+                    )
+                  }
+                    
                 </div>
               </div>
           </div>

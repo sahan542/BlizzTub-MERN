@@ -9,7 +9,7 @@ const userLogout = require('../controller/userLogout')
 router.post("/signup",userSignupController)
 router.post("/login",userSignInController)
 router.get("/user-details",authToken,userDetailsController)
-router.get("/userLogout",userLogout)
+router.post("/logout",userLogout)
 
 
 
