@@ -16,7 +16,7 @@ import { setUserDetails } from '../store/userSlice';
 const Header = () => {
   const navigate = useNavigate()
   const user = useSelector(state => state?.user?.user)
-  console.log("user header",user)
+  //console.log("user header",user)
   const dispatch = useDispatch()
   const [menuDisplay, setMenuDisplay] = useState(false);
 
@@ -73,7 +73,7 @@ const Header = () => {
                   menuDisplay && (
                     <div className='absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded-md'>
                       <nav>
-                        <Link to={"/admin-panel"} className='whitespace-nowrap hover:bg-slate-100 p-2'>Admin Panel</Link>
+                        <Link to={"/admin-panel"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2'>Admin Panel</Link>
                       </nav>
                     </div>
 
