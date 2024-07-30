@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import SummaryApi from '../common'
 import { toast } from 'react-toastify'
 import moment from 'moment'
+import { BiEditAlt } from "react-icons/bi";
+import ChangeUserRole from '../components/ChangeUserRole';
+
 
 const AllUsers = () => {
 
@@ -38,6 +41,7 @@ const AllUsers = () => {
           <th>Email</th>
           <th>Role</th>
           <th>Created Date</th>
+          <th>Actions</th>
         </thead>
         <tbody className=''>
           {
@@ -49,12 +53,18 @@ const AllUsers = () => {
                     <td>{el?.email}</td>
                     <td>{el?.role}</td>
                     <td>{moment(el?.createdAt).format('LL')}</td>
+                    <td>
+                        <button className='bg-green-200 p-2 rounded-full cursor-pointer hover:bg-green-400 hover:text-white'>
+                          <BiEditAlt />
+                        </button>
+                    </td>
                 </tr>
               )
             })
           }
         </tbody>
       </table>
+      <ChangeUserRole/>
     </div>
   )
 }
