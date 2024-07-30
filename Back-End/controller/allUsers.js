@@ -6,7 +6,9 @@ async function allUsers(req,res){
         const useremails = allUsers.map(user =>user.email)
         res.json({
             message: "All User Details",
-            data: allUsers
+            data: allUsers,
+            success: true,
+            error: false
         })
         console.log("userId all users",useremails)
 
