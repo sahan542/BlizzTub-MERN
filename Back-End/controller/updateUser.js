@@ -5,13 +5,16 @@ async function updateUser(req,res){
         const sessionUser = req.userId;
         const { userId, email, name, role } = req.body
         const payload = {
+           
             ...(email && { email : email}),
             ...(name && { name : name}),
-            ...(userId && { userId : userId}),
+            //...(userId && { userId : userId}),
             ...(role && { role : role}),
+
         }
 
         const user = await userModel.findById(sessionUser)
+        console.log("userId :", sessionUser)    //not working
         console.log("user.role   -", user.role)
 
         const updateUser = await userModel.findByIdAndUpdate(userId,payload)

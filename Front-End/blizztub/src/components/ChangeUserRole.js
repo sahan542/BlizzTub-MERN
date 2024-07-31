@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 
 const ChangeUserRole = ({name,email,role,userId,onClose,callFunc}) => {
-    const [userRole, setUserRole] = useState("")
+    const [userRole, setUserRole] = useState(role)
     const handleOnChangeSelect = (e)=>{
         setUserRole(e.target.value)
         console.log(e.target.value)
@@ -29,6 +29,8 @@ const ChangeUserRole = ({name,email,role,userId,onClose,callFunc}) => {
 
         if(responseData.success){
             toast.success(responseData.message);
+            onClose()
+            callFunc()
         }
         
         if(responseData.error){
