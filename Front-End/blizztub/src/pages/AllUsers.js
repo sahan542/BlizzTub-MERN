@@ -9,11 +9,18 @@ import ChangeUserRole from '../components/ChangeUserRole';
 const AllUsers = () => {
 
   const [allUser, setAllUser] = useState([])
+  const [openUpdateRole, setOpenUpdateRole] = useState(false)
+  const [updateUserDetails, setUpdateUserDetails] = useState({
+    email : "",
+    name : "",
+    role : "",
+    _id: ""
+  })
 
   const fetchAllUsers = async() =>{
     const fetchData = await fetch(SummaryApi.all_users.url, {
-      method : SummaryApi.all_users.method,
-      credentials : "include"
+        method : SummaryApi.all_users.method,
+        credentials : "include"
     })
     const dataResponse = await fetchData.json()
 
@@ -54,7 +61,11 @@ const AllUsers = () => {
                     <td>{el?.role}</td>
                     <td>{moment(el?.createdAt).format('LL')}</td>
                     <td>
-                        <button className='bg-green-200 p-2 rounded-full cursor-pointer hover:bg-green-400 hover:text-white'>
+                        <button className='bg-green-200 p-2 rounded-full cursor-pointer hover:bg-green-400 hover:text-white' 
+                        onClick={() =>{
+                          setUpdateUserDetails(el)
+                          setOpenUpdateRole(true)}
+                        }>
                           <BiEditAlt />
                         </button>
                     </td>
@@ -64,7 +75,19 @@ const AllUsers = () => {
           }
         </tbody>
       </table>
-      <ChangeUserRole/>
+      {
+        openUpdateRole && (
+          <ChangeUserRole onClose={() =>setOpenUpdateRole(false)} 
+              name={updateUserDetails.name}
+              email={updateUserDetails.email}
+              role={updateUserDetails.role} 
+              userId={updateUserDetails._id}
+              callFunc={fetchAllUsers}
+              />
+
+        )
+      }
+
     </div>
   )
 }

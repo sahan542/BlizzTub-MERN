@@ -6,6 +6,7 @@ const userDetailsController = require('../controller/userDetails')
 const authToken = require('../middleware/authToken')
 const userLogout = require('../controller/userLogout')
 const allUsers = require('../controller/allUsers')
+const updateUser = require('../controller/updateUser')
 
 router.post("/signup",userSignupController)
 router.post("/login",userSignInController)
@@ -14,6 +15,7 @@ router.post("/logout",userLogout)
 
 //admin panel routes
 router.get("/all-users",authToken,allUsers)
+router.post("/update-user",authToken,updateUser)
 
 
 
