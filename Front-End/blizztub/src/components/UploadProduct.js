@@ -32,6 +32,12 @@ const UploadProduct = ({ onClose }) => {
         console.log("file", file);
 
         const uploadImageCloudinary = await uploadImage(file)
+        setData((preve)=>{
+            return{
+                ...preve,
+                productImage : [...preve.productImage, uploadImageCloudinary.url]
+            }
+        })
         console.log("upload image : ", uploadImageCloudinary.url);
     };
 
@@ -78,8 +84,19 @@ const UploadProduct = ({ onClose }) => {
                             </div>
                     </div>
                     </label>
-                    <div>
-                        <img src='' width={80} height={80} className='bg-slate-100 border' alt='product-img' />
+                    <div className='py-6 flex flex-row gap-3'>
+                        {
+                            data?.productImage[0] ? (
+                                data.productImage.map(el=>{
+                                    return(
+                                        <img src={el} width={75} height={75} className='bg-slate-100 border ' alt={el} />
+                                    )
+                                })
+                            ) : (
+                                <p className='text-red-600 font-normal text-sm pb-4'>*Please Upload Product Image</p>
+                            )
+                        }
+                    
                     </div>
                 </form>
             </div>
