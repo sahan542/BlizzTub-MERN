@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { IoCloseSharp } from "react-icons/io5";
 import productCategory from '../helpers/productCategory';
 import { FaCloudUploadAlt } from "react-icons/fa";
+import uploadImage from '../helpers/uploadImage';
 
 
 const UploadProduct = ({ onClose }) => {
@@ -25,10 +26,13 @@ const UploadProduct = ({ onClose }) => {
         }));
     };
 
-    const handleUploadProduct = (e) => {
+    const handleUploadProduct = async(e) => {
         const file = e.target.files[0];
         setUploadProductImageInput(file.name)
         console.log("file", file);
+
+        const uploadImageCloudinary = await uploadImage(file)
+        console.log("upload image : ", uploadImageCloudinary.url);
     };
 
 
@@ -64,15 +68,16 @@ const UploadProduct = ({ onClose }) => {
                     </select>
 
                     <label htmlFor='productImage' className='mt-3'>Product Image :</label>
+                    <label htmlFor='uploadImageInput'>
                     <div className='p-2 bg-slate-100 border rounded h-32 w-full flex justify-center items-center'>
-                        <label htmlFor='uploadImageInput'>
+
                             <div className='text-slate-500 flex items-center justify-center flex-col gap-2 cursor-pointer'>
                                 <span className='text-3xl'><FaCloudUploadAlt /></span>
                                 <p className='text-xm'>Upload Product Image</p>
                                 <input type='file' id='uploadImageInput' className='hidden cursor-pointer' onChange={handleUploadProduct} />
                             </div>
-                        </label>
                     </div>
+                    </label>
                     <div>
                         <img src='' width={80} height={80} className='bg-slate-100 border' alt='product-img' />
                     </div>

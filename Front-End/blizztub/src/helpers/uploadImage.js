@@ -1,9 +1,19 @@
-const url = `https://api.cloudinary.com/v1_1/${process.env.}/image`
+const url = `https://api.cloudinary.com/v1_1/dtzx6gxfh/image/upload`
 
 
 
 const uploadImage = async(image) => {
-    const dataResponse = await fetch()
+    const formData = new FormData()
+    formData.append("file",image);
+    formData.append("upload_preset","blizz-tub");
+
+
+    const dataResponse = await fetch(url, {
+        method : "post",
+        body : formData
+    })
+
+    return dataResponse.json()
 }
 
 
