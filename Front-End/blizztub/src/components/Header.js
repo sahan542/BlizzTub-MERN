@@ -49,7 +49,7 @@ const Header = () => {
         <div className='h-full container mx-auto flex items-center px-6 justify-between'>
           <div className=''>
               <Link to={"/"}>
-                  <Logo w={90} h={60}/>
+                  <Logo w={70} h={50}/>
               </Link>
           </div>
           <div className='hidden lg:flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow-md pl-2'>
@@ -81,7 +81,7 @@ const Header = () => {
                       <nav>
                         {
                           user?.role === ROLE.ADMIN && (
-                            <Link to={"/admin-panel"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2'>Admin Panel</Link>
+                            <Link to={"/admin-panel"} className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2' onClick={()=>setMenuDisplay(false)}>Admin Panel</Link>
                           )
                         }
                         
