@@ -2,6 +2,7 @@ const url = `https://api.cloudinary.com/v1_1/dtzx6gxfh/image/upload`
 
 
 
+
 const uploadImage = async(image) => {
     const formData = new FormData()
     formData.append("file",image);

@@ -3,6 +3,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import productCategory from '../helpers/productCategory';
 import { FaCloudUploadAlt } from "react-icons/fa";
 import uploadImage from '../helpers/uploadImage';
+import DisplayImage from './DisplayImage';
 
 
 const UploadProduct = ({ onClose }) => {
@@ -16,7 +17,9 @@ const UploadProduct = ({ onClose }) => {
         sellingPrice: ""
     });
 
-    const [uploadProductImageInput, setUploadProductImageInput] = useState("");
+    const [openFullScreenImage, setOpenFullScreenImage] = useState(false)
+
+    const [fullScreenImage, setFullScreenImage] = useState("")
 
     const handleOnChange = (e) => {
         const { name, value } = e.target;
@@ -28,23 +31,19 @@ const UploadProduct = ({ onClose }) => {
 
     const handleUploadProduct = async(e) => {
         const file = e.target.files[0];
-        setUploadProductImageInput(file.name)
-        console.log("file", file);
-
         const uploadImageCloudinary = await uploadImage(file)
         setData((preve)=>{
             return{
                 ...preve,
-                productImage : [...preve.productImage, uploadImageCloudinary.url]
+                productImage : [ ...preve.productImage, uploadImageCloudinary.url]
             }
         })
-        console.log("upload image : ", uploadImageCloudinary.url);
     };
 
 
     return (
         <div className='fixed w-full h-full z-10 flex justify-between items-center top-0 bottom-0 right-0 left-0 bg-slate-200 bg-opacity-60'>
-            <div className='w-full mx-auto bg-white shadow-md p-4 max-w-2xl h-full max-h-[80%] rounded-md overflow-y-auto'>
+            <div className='w-full mx-auto bg-white shadow-md p-4 max-w-2xl h-full max-h-[80%] rounded-md overflow-y-auto pb-8'>
                 <div className='flex justify-between p-4'>
                     <h2 className='font-bold text-lg'>Upload Product</h2>
                     <div className='w-fit ml-auto text-lg font-bold cursor-pointer hover:text-red-500' onClick={onClose}>
@@ -52,7 +51,7 @@ const UploadProduct = ({ onClose }) => {
                     </div>
                 </div>
 
-                <form className='grid p-4 gap-2 h-full pb-3'>
+                <form className='grid p-4 gap-2 h-full pb-3 mb-6'>
                     <label htmlFor='productName'>Product Name :</label>
                     <input type='text' id='productName' placeholder='Enter product name'
                         value={data.productName}
@@ -89,7 +88,15 @@ const UploadProduct = ({ onClose }) => {
                             data?.productImage[0] ? (
                                 data.productImage.map(el=>{
                                     return(
-                                        <img src={el} width={75} height={75} className='bg-slate-100 border ' alt={el} />
+                                       <div>
+                                             <img src={el} width={75} height={75} 
+                                                className='bg-slate-100 border cursor-pointer' 
+                                                alt={el} 
+                                                onClick={()=>{setOpenFullScreenImage(true) 
+                                                    setFullScreenImage(el)
+                                                }}
+                                            />
+                                       </div>
                                     )
                                 })
                             ) : (
@@ -98,8 +105,20 @@ const UploadProduct = ({ onClose }) => {
                         }
                     
                     </div>
+
+
+                    <button className='px-3 bg-purple-600 shadow-md rounded-full py-2 mb-5 text-white hover:bg-purple-800'>
+                        Upload Product
+                    </button>
                 </form>
             </div>
+
+            {/**display image full screen  */}
+            {
+                openFullScreenImage && (
+                    <DisplayImage onClose={()=>setOpenFullScreenImage(false)} imgUrl={fullScreenImage} />
+                )
+            }
         </div>
     )
 }
