@@ -4,6 +4,8 @@ import productCategory from '../helpers/productCategory';
 import { FaCloudUploadAlt } from "react-icons/fa";
 import uploadImage from '../helpers/uploadImage';
 import DisplayImage from './DisplayImage';
+import { MdDelete } from "react-icons/md";
+
 
 
 const UploadProduct = ({ onClose }) => {
@@ -40,6 +42,24 @@ const UploadProduct = ({ onClose }) => {
         })
     };
 
+    const handleDeleteProductImage = async(index) =>{
+        console.log("image index",index);
+
+        const newProductImage = [...data.productImage]
+        newProductImage.splice(index,1)
+        setData((preve)=>{
+            return{
+                ...preve,
+                productImage : [...newProductImage]
+            }
+        })
+    }
+
+    const handleSubmit = (e) =>{
+        e.preventDefault()
+        console.log("data : ",data)
+    }
+
 
     return (
         <div className='fixed w-full h-full z-10 flex justify-between items-center top-0 bottom-0 right-0 left-0 bg-slate-200 bg-opacity-60'>
@@ -51,7 +71,7 @@ const UploadProduct = ({ onClose }) => {
                     </div>
                 </div>
 
-                <form className='grid p-4 gap-2 h-full pb-3 mb-6'>
+                <form className='grid p-4 gap-2 h-full pb-3 mb-6' onSubmit={handleSubmit}>
                     <label htmlFor='productName'>Product Name :</label>
                     <input type='text' id='productName' placeholder='Enter product name'
                         value={data.productName}
@@ -66,10 +86,12 @@ const UploadProduct = ({ onClose }) => {
 
                     <label htmlFor='category'>Category :</label>
                     <select value={data.category} name='category' className='p-2 bg-slate-100 border rounded' onChange={handleOnChange}>
-                        <option value="" disabled>Select category</option>
-                        {productCategory.map((el, index) => (
-                            <option value={el.value} key={el.value + index}>{el.label}</option>
-                        ))}
+                        <option value={""}>Select category</option>
+                        {productCategory.map((el, index) => {
+                            return (
+                                <option value={el.value} key={el.value + index}>{el.label}</option>
+                            )
+                        })}
                     </select>
 
                     <label htmlFor='productImage' className='mt-3'>Product Image :</label>
@@ -86,16 +108,20 @@ const UploadProduct = ({ onClose }) => {
                     <div className='py-6 flex flex-row gap-3'>
                         {
                             data?.productImage[0] ? (
-                                data.productImage.map(el=>{
+                                data.productImage.map((el,index)=>{
                                     return(
-                                       <div>
-                                             <img src={el} width={75} height={75} 
-                                                className='bg-slate-100 border cursor-pointer' 
+                                       <div className='relative group bg-slate-400'>
+                                            <img src={el} width={75} height={75} 
+                                                className='bg-slate-100 border cursor-pointer items-center justify-center' 
                                                 alt={el} 
                                                 onClick={()=>{setOpenFullScreenImage(true) 
                                                     setFullScreenImage(el)
                                                 }}
                                             />
+                                            <div className='absolute bottom-0 right-0 p-1 mb-1 mr-1 text-white bg-red-600 rounded-full hidden group-hover:block' onClick={()=> handleDeleteProductImage(index)} >
+                                                <MdDelete />
+
+                                            </div>
                                        </div>
                                     )
                                 })
@@ -105,6 +131,22 @@ const UploadProduct = ({ onClose }) => {
                         }
                     
                     </div>
+                    <label htmlFor='price'>Price :</label>
+                    <input type='number' id='price' placeholder='Enter price'
+                        value={data.price}
+                        name='price' onChange={handleOnChange}
+                        className='p-2 bg-slate-100 border py-2 rounded-md' />
+
+                    <label htmlFor='sellingPrice'>Selling Price :</label>
+                    <input type='number' id='sellingPrice' placeholder='Enter Selling Price'
+                        value={data.sellingPrice}
+                        name='sellingPrice' onChange={handleOnChange}
+                        className='p-2 bg-slate-100 border py-2 rounded-md' />
+
+                    <label htmlFor='description'>Description :</label>
+                    <textarea className='h-28 bg-slate-100 border resize-none p-2' placeholder='Enter product description' value={data.description} name='description' id='description' onChange={handleOnChange} typeof='text'>
+
+                    </textarea>
 
 
                     <button className='px-3 bg-purple-600 shadow-md rounded-full py-2 mb-5 text-white hover:bg-purple-800'>
