@@ -5,6 +5,8 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import uploadImage from '../helpers/uploadImage';
 import DisplayImage from './DisplayImage';
 import { MdDelete } from "react-icons/md";
+import SummaryApi from './../common/index';
+import { toast } from 'react-toastify';
 
 
 
@@ -55,9 +57,26 @@ const UploadProduct = ({ onClose }) => {
         })
     }
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async(e) =>{
         e.preventDefault()
         console.log("data : ",data)
+        const response = await fetch(SummaryApi.upload_Product.url,{
+            method : SummaryApi.upload_Product.method,
+            credentials : 'include',
+            headers : {
+                "content-type" : "application/json"
+            },
+            body : JSON.stringify(data)
+        })
+
+        const responseData = await response.json();
+        if(responseData.success){
+            toast.success(responseData?.message)
+            onClose(true)
+        }
+        if(responseData.error){
+            toast.error(responseData?.message)
+        }
     }
 
 
@@ -82,10 +101,10 @@ const UploadProduct = ({ onClose }) => {
                     <input type='text' id='brandName' placeholder='Enter brand name'
                         value={data.brandName}
                         name='brandName' onChange={handleOnChange}
-                        className='p-2 bg-slate-100 border py-2 rounded-md' />
+                        className='p-2 bg-slate-100 border py-2 rounded-md' required/>
 
                     <label htmlFor='category'>Category :</label>
-                    <select value={data.category} name='category' className='p-2 bg-slate-100 border rounded' onChange={handleOnChange}>
+                    <select value={data.category} name='category' className='p-2 bg-slate-100 border rounded' onChange={handleOnChange} required>
                         <option value={""}>Select category</option>
                         {productCategory.map((el, index) => {
                             return (
@@ -135,16 +154,16 @@ const UploadProduct = ({ onClose }) => {
                     <input type='number' id='price' placeholder='Enter price'
                         value={data.price}
                         name='price' onChange={handleOnChange}
-                        className='p-2 bg-slate-100 border py-2 rounded-md' />
+                        className='p-2 bg-slate-100 border py-2 rounded-md' required/>
 
                     <label htmlFor='sellingPrice'>Selling Price :</label>
                     <input type='number' id='sellingPrice' placeholder='Enter Selling Price'
                         value={data.sellingPrice}
                         name='sellingPrice' onChange={handleOnChange}
-                        className='p-2 bg-slate-100 border py-2 rounded-md' />
+                        className='p-2 bg-slate-100 border py-2 rounded-md' required/>
 
                     <label htmlFor='description'>Description :</label>
-                    <textarea className='h-28 bg-slate-100 border resize-none p-2' placeholder='Enter product description' value={data.description} name='description' id='description' onChange={handleOnChange} typeof='text'>
+                    <textarea className='h-28 bg-slate-100 border resize-none p-2' placeholder='Enter product description' value={data.description} name='description' id='description' onChange={handleOnChange} typeof='text' required>
 
                     </textarea>
 
