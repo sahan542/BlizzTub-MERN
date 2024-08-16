@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import UploadProduct from '../components/UploadProduct'
 import SummaryApi from '../common';
+import AdminProductCard from '../components/AdminProductCard';
 
 const AllProducts = () => {
   const [openUploadProduct, setOpenUploaProduct] = useState(false);
@@ -24,18 +25,16 @@ const AllProducts = () => {
       <div className='bg-white py-2 px-4 flex justify-between items-center'>
         <h2 className='font-bold text-lg'>All Products</h2>
         <button className='border-2 py-2 px-4 rounded-full bg-green-500 text-white shadow-md hover:bg-purple-700 transition'
-                onClick={() => setOpenUploaProduct(true)}
+                onClick={() => setOpenUploaProduct(false)}
                 >Upload Product</button>
       </div>
       
       {/*All Products*/}
-      <div>
+      <div className='flex items-center flex-wrap gap-5 py-4 h-[calc(100vh-190px)] overflow-y-scroll'>
         {
           allProducts.map((product,index)=>{
             return(
-              <div>
-                <img src={product?.productImage[0]} width={100} height={100} alt='' />
-              </div>
+              <AdminProductCard data={product} fetchdata={fetchAllProducts}/>
             )
 
           })
@@ -45,8 +44,9 @@ const AllProducts = () => {
       {/*upload product component */}
       {
         openUploadProduct && (
-          <UploadProduct onClose={() =>setOpenUploaProduct(false)} />
+          <UploadProduct onClose={() =>setOpenUploaProduct(false)} fetchData={fetchAllProducts}/>
         )
+          
       }
 
 

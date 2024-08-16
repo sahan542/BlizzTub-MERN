@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 
 
 
-const UploadProduct = ({ onClose }) => {
+const UploadProduct = ({ onClose,fetchData }) => {
     const [data, setData] = useState({
         productName: "",
         brandName: "",
@@ -73,6 +73,7 @@ const UploadProduct = ({ onClose }) => {
         if(responseData.success){
             toast.success(responseData?.message)
             onClose(true)
+            fetchData()
         }
         if(responseData.error){
             toast.error(responseData?.message)
@@ -169,7 +170,7 @@ const UploadProduct = ({ onClose }) => {
 
 
                     <button className='px-3 bg-purple-600 shadow-md rounded-full py-2 mb-5 text-white hover:bg-purple-800'>
-                        Upload Product
+                        Update Product
                     </button>
                 </form>
             </div>
