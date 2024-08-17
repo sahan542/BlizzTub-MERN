@@ -14,7 +14,7 @@ const AdminEditProduct = ({ onClose,productData,fetchdata }) => {
         productName: productData?.productName,
         brandName: productData?.brandName,
         category: productData?.category,
-        productImage: [],
+        productImage: productData?.productImage,
         description: productData?.description,
         price: productData?.price,
         sellingPrice: productData?.sellingPrice

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FaEdit } from "react-icons/fa";
 import AdminEditProduct from './AdminEditProduct';
-import displayDollerCurrency from '../../../../Back-End/helpers/displayCurrency';
+import displayDollerCurrency from '../helpers/displayCurrency';
 
 
 const AdminProductCard = ({data,fetchdata}) => {

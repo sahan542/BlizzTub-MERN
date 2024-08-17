@@ -25,7 +25,7 @@ const AllProducts = () => {
       <div className='bg-white py-2 px-4 flex justify-between items-center'>
         <h2 className='font-bold text-lg'>All Products</h2>
         <button className='border-2 py-2 px-4 rounded-full bg-green-500 text-white shadow-md hover:bg-purple-700 transition'
-                onClick={() => setOpenUploaProduct(false)}
+                onClick={() => setOpenUploaProduct(true)}
                 >Upload Product</button>
       </div>
       
@@ -34,7 +34,8 @@ const AllProducts = () => {
         {
           allProducts.map((product,index)=>{
             return(
-              <AdminProductCard data={product} fetchdata={fetchAllProducts}/>
+              <AdminProductCard   
+              key={index+"allProduct"} fetchdata={fetchAllProducts} data={product}/>
             )
 
           })
