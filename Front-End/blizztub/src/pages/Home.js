@@ -1,8 +1,11 @@
 import React from 'react'
+import CategoryList from '../components/CategoryList'
 
 const Home = () => {
   return (
-    <div className='text-red-900'>Home</div>
+    <div>
+        <CategoryList />
+    </div>
   )
 }
 
